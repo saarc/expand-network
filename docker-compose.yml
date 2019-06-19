@@ -33,8 +33,7 @@ services:
     volumes:
       - ./crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.org1.example.com
-    networks:
-      - basic
+
 # ORG2 CA
   ca.org2.example.com:
     extends:
@@ -52,8 +51,7 @@ services:
     volumes:
       - ./crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.org2.example.com
-    networks:
-      - basic
+
 # ORG3 CA  
   ca.org3.example.com:
     extends:
@@ -71,8 +69,6 @@ services:
     volumes:
       - ./crypto-config/peerOrganizations/org3.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.org3.example.com
-    networks:
-      - basic
 
   orderer.example.com:
     container_name: orderer.example.com
@@ -120,7 +116,9 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./config:/etc/hyperledger/configtx
-
+    networks:
+      - basic
+      
   peer0.org1.example.com:
     extends:
       service: peer-base
@@ -153,8 +151,6 @@ services:
     depends_on:
       - orderer.example.com
       # - couchdb
-    networks:
-      - basic
   
   peer1.org1.example.com:
     extends:
@@ -175,8 +171,6 @@ services:
         - ./crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls
     depends_on:
       - orderer.example.com
-    networks:
-      - basic
 
   peer0.org2.example.com:
     extends:
@@ -197,8 +191,6 @@ services:
         - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls
     depends_on:
       - orderer.example.com
-    networks:
-      - basic
   
   peer0.org3.example.com:
     extends:
@@ -219,8 +211,6 @@ services:
         - ./crypto-config/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls:/etc/hyperledger/fabric/tls
     depends_on:
       - orderer.example.com
-    networks:
-      - basic
 
   couchdb:
     container_name: couchdb
